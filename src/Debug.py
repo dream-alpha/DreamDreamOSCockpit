@@ -1,7 +1,6 @@
-#!/usr/bin/python
 # coding=utf-8
 #
-# Copyright (C) 2018-2024 by dream-alpha
+# Copyright (C) 2018-2026 by dream-alpha
 #
 # In case of reuse of this source code please do not remove this copyright.
 #
@@ -27,7 +26,7 @@ from .Version import ID, PLUGIN
 
 logger = None
 streamer = None
-format_string = (ID + ": " + "%(levelname)s: %(filename)s: %(funcName)s: %(message)s")
+format_string = ID + ": " + "%(levelname)s: %(filename)s: %(funcName)s: %(message)s"
 log_levels = {"ERROR": logging.ERROR, "INFO": logging.INFO, "DEBUG": logging.DEBUG}
 plugin = PLUGIN.lower()
 exec("config.plugins." + plugin + " = ConfigSubsection()")  # noqa: F401, pylint: disable=W0122
@@ -35,19 +34,19 @@ exec("config.plugins." + plugin + ".debug_log_level = ConfigSelection(default='I
 
 
 def initLogging():
-	global logger
-	global streamer
-	if not logger:
-		logger = logging.getLogger(ID)
-		formatter = logging.Formatter(format_string)
-		streamer = logging.StreamHandler(sys.stdout)
-		streamer.setFormatter(formatter)
-		logger.addHandler(streamer)
-		logger.propagate = False
-		setLogLevel(log_levels[eval("config.plugins." + plugin + ".debug_log_level").value])
+    global logger
+    global streamer
+    if not logger:
+        logger = logging.getLogger(ID)
+        formatter = logging.Formatter(format_string)
+        streamer = logging.StreamHandler(sys.stdout)
+        streamer.setFormatter(formatter)
+        logger.addHandler(streamer)
+        logger.propagate = False
+        setLogLevel(log_levels[eval("config.plugins." + plugin + ".debug_log_level").value])
 
 
 def setLogLevel(level):
-	logger.setLevel(level)
-	streamer.setLevel(level)
-	logger.info("level: %s", level)
+    logger.setLevel(level)
+    streamer.setLevel(level)
+    logger.info("level: %s", level)
